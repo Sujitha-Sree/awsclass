@@ -1,0 +1,38 @@
+{
+	"ingest-actives": {
+        "source": {
+            "data-location": "s3://sujitha-s3-landingzone-ohio/dataset-test/",
+            "file-format": "parquet"
+        },
+        "destination": {
+            "data-location": "s3://sujitha-s3-rawzone-ohio/dataset-test/actives/",
+            "file-format": "parquet"
+        },
+        "masking-cols": [],
+        "transformation-cols": [],
+        "partition-cols": []
+    },
+    "masked-actives": {
+        "source": {
+            "data-location": "s3://sujitha-s3-rawzone-ohio/dataset-test/actives/",
+            "file-format": "parquet"
+        },
+        "destination": {
+            "data-location": "s3://sujitha-s3-stagingzone-ohio/finaloutput-test/transformed-dataset",
+            "file-format": "parquet"
+        },
+        "masking-cols": ["advertising_id", "user_id"],
+        "transformation-cols": {
+            "user_latitude":"DecimalType,7",
+            "user_longitude":"DecimalType,7",
+            "location_source":"ArrayType-StringType"
+        },
+
+        "partition-cols": ["month","date"]
+    },
+    "lookup-dataset": {
+		"data-location": "s3://sujitha-s3-stagingzone-ohio/finaloutput-test/lookup/",
+		"pii-cols": ["advertising_id","user_id"]
+		}
+	 
+}
